@@ -2,6 +2,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import configuration from './config';
 import routes from './routes';
+import db from './db';
 import cors from 'cors'
 
 const app = express();
@@ -11,6 +12,8 @@ const config = configuration(app);
 app.use(bodyParser());
 
 app.use(cors())
+//DATABASE CONNECTION
+db.connect(config);
 
 //ROUTES----------------
 app.use('/', routes());
