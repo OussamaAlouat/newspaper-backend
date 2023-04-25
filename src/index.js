@@ -1,7 +1,8 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import cors from 'cors';
 import configuration from './config';
+import routes from './routes';
+import cors from 'cors'
 
 const app = express();
 
@@ -10,6 +11,10 @@ const config = configuration(app);
 app.use(bodyParser());
 
 app.use(cors())
+
+//ROUTES----------------
+app.use('/', routes());
+
 
 app.listen(process.env.PORT || config.port, () => {
     const listeningPort = process.env.PORT || config.port;
