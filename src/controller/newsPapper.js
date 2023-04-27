@@ -9,8 +9,8 @@ const getNewsPapers = (req, res) => {
 };
 
 const postNewsPaper = (req, res) => {
-  const {title, image , abstract, creation_date, languages, publisher, link } = req.body;
-  console.log(req.body)
+  const { title, image , abstract, creation_date, languages, publisher, link } = req.body;
+
   //If there are one document with the same title, creation_date and publisher
   //we will not put in our database.
   NewsPaper.find({ title, creation_date, publisher })
@@ -45,9 +45,21 @@ const postNewsPaper = (req, res) => {
     })
 };
 
-
+const deleteNewsPaper = (req, res ) => {
+  const { id } = req.body;
+  NewsPaper.findByIdAndDelete(id).then((resp) => {
+    if(resp !== null) {
+      res.json(resp);
+    } else {
+      res.status(404).json({ msg: 'Not found' });
+    }
+  }).catch(((err) =>{
+    res.json(body);
+  }))
+};
 
 export {
   getNewsPapers,
-  postNewsPaper
+  postNewsPaper,
+  deleteNewsPaper
 }
