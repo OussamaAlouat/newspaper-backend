@@ -2,10 +2,6 @@ import mongoose from 'mongoose';
 import { Schema } from 'mongoose';
 
 const NewsPaperSchema = Schema({
-  id: {
-    type: Number,
-    required: true
-  },
   title: {
     type: String,
     required: true
