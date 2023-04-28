@@ -1,9 +1,12 @@
 import { Router } from 'express';
 import { index } from '../controller'
-import { deleteNewsPaper, getNewsPapers, postNewsPaper } from '../controller/newsPapper';
+import { deleteNewsPaper, getNewsPapers, postNewsPaper, updateNewsPaper } from '../controller/newsPapper';
 
 import { check } from "express-validator";
 import { postCheckValidation } from "../middleware/validation";
+import { isPresentAtleastOne } from '../middleware/checker';
+
+const variablesToCheck = ['title', 'image', 'abstract', 'languages', 'link', 'creation_date'];
 
 export default () => {
   const routes = Router();
@@ -24,14 +27,25 @@ export default () => {
     (req, res) => postNewsPaper(req, res)
   );
 
-  routes.delete('/newspaper',
+  routes.delete('/newspaper/:id',
+    [
+      check('id').exists(),
+      check('id').isMongoId(),
+    ],
+    (req, res, next) => postCheckValidation(req, res, next),
+    (req, res) => deleteNewsPaper(req, res)
+  );
+
+  routes.put('/newspaper/:id',
   [
     check('id').exists(),
     check('id').isMongoId(),
+    check('publisher').not().exists(),
   ],
+  (req, res, next) => isPresentAtleastOne(variablesToCheck, res, req, next),
   (req, res, next) => postCheckValidation(req, res, next),
-  (req, res) => deleteNewsPaper(req, res)
-);
+  (req,res) => updateNewsPaper(req, res)
+  );
 
   return routes;
 }
