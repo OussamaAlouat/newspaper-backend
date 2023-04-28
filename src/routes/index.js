@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { index } from '../controller'
 import { deleteNewsPaper, getNewsPapers, postNewsPaper, updateNewsPaper } from '../controller/newsPapper';
 
-import { check } from "express-validator";
+import { check, param } from "express-validator";
 import { postCheckValidation } from "../middleware/validation";
 import { isPresentAtleastOne } from '../middleware/checker';
 
@@ -29,8 +29,8 @@ export default () => {
 
   routes.delete('/newspaper/:id',
     [
-      check('id').exists(),
-      check('id').isMongoId(),
+      param('id').exists(),
+      param('id').isMongoId(),
     ],
     (req, res, next) => postCheckValidation(req, res, next),
     (req, res) => deleteNewsPaper(req, res)
@@ -38,8 +38,8 @@ export default () => {
 
   routes.put('/newspaper/:id',
   [
-    check('id').exists(),
-    check('id').isMongoId(),
+    param('id').exists(),
+    param('id').isMongoId(),
     check('publisher').not().exists(),
   ],
   (req, res, next) => isPresentAtleastOne(variablesToCheck, res, req, next),
