@@ -62,7 +62,7 @@ test('-------- Controller: Delete /newspaper/:id -- id not found on database', (
   const expectedResponse = {
     msg: 'The newsPaper is not present on database'
   };
-  
+
 
   const statusCodeExpected = 404;
   request(app)
@@ -78,4 +78,44 @@ test('-------- Controller: Delete /newspaper/:id -- id not found on database', (
     });
 });
 
+
+test('-------- Controller: Delete /newspaper/:id -- id is on databases', (assert) => {
+  const url = '/newspaper';
+  const message = 'Status must be 200 and response must match with expected response';
+
+
+  const payload = {
+    title: 'New newspaper' + new Date(),
+    image: 'images ' + new Date(),
+    creation_date: new Date(),
+    abstract: 'The content of this document is a test',
+    languages: ['es', 'fr'],
+    publisher: {
+      name: 'Oussama Alouat',
+      "id": '71212' + new Date(),
+    },
+    link: 'lin for test' + new Date(),
+  };
+
+  const statusCodeExpected = 200;
+  request(app)
+    .post(url)
+    .send(payload)
+    .then((resp) => {
+      const id = resp.body.data._id;
+      const deleteUrl = '/newspaper/'+ id;
+      request(app)
+        .delete(deleteUrl)
+        .expect(statusCodeExpected)
+        .then((response) => {
+          const newsPaper = response.body._id;
+          payload._id = id;
+          assert.deepEqual(newsPaper, id, message);
+          assert.end();
+        }, (err) => {
+          assert.fail(err.message);
+          assert.end();
+        });
+    })
+});
 
