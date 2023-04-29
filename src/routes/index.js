@@ -37,14 +37,14 @@ export default () => {
   );
 
   routes.put('/newspaper/:id',
-  [
+    [
     param('id').exists(),
     param('id').isMongoId(),
     check('publisher').not().exists(),
-  ],
-  (req, res, next) => isPresentAtleastOne(variablesToCheck, res, req, next),
-  (req, res, next) => postCheckValidation(req, res, next),
-  (req,res) => updateNewsPaper(req, res)
+    ],
+    (req, res, next) => isPresentAtleastOne(variablesToCheck, res, req, next),
+    (req, res, next) => postCheckValidation(req, res, next),
+    (req,res) => updateNewsPaper(req, res)
   );
 
   return routes;
