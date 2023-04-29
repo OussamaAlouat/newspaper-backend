@@ -1,14 +1,25 @@
 import { Router } from 'express';
 import { index } from '../controller'
-import { deleteNewsPaper, getNewsPapers, postNewsPaper } from '../controller/newsPapper';
+import { deleteNewsPaper, getNewspaperById, getNewsPapers, postNewsPaper, updateNewsPaper } from '../controller/newsPapper';
 
-import { check } from "express-validator";
+import { check, param } from "express-validator";
 import { postCheckValidation } from "../middleware/validation";
+import { isPresentAtleastOne } from '../middleware/checker';
+
+const variablesToCheck = ['title', 'image', 'abstract', 'languages', 'link', 'creation_date'];
 
 export default () => {
   const routes = Router();
   routes.get('/',
     (req, res) => index(req, res)
+  );
+  routes.get('/newspaper/:id',
+    [
+      param('id').exists(),
+      param('id').isMongoId(),
+    ],
+    (req, res, next) => postCheckValidation(req, res, next),
+    (req, res) => getNewspaperById(req, res)
   );
 
   routes.get('/newspaper', (req, res) => getNewsPapers(req, res));
@@ -24,14 +35,25 @@ export default () => {
     (req, res) => postNewsPaper(req, res)
   );
 
-  routes.delete('/newspaper',
-  [
-    check('id').exists(),
-    check('id').isMongoId(),
-  ],
-  (req, res, next) => postCheckValidation(req, res, next),
-  (req, res) => deleteNewsPaper(req, res)
-);
+  routes.delete('/newspaper/:id',
+    [
+      param('id').exists(),
+      param('id').isMongoId(),
+    ],
+    (req, res, next) => postCheckValidation(req, res, next),
+    (req, res) => deleteNewsPaper(req, res)
+  );
+
+  routes.put('/newspaper/:id',
+    [
+    param('id').exists(),
+    param('id').isMongoId(),
+    check('publisher').not().exists(),
+    ],
+    (req, res, next) => isPresentAtleastOne(variablesToCheck, res, req, next),
+    (req, res, next) => postCheckValidation(req, res, next),
+    (req,res) => updateNewsPaper(req, res)
+  );
 
   return routes;
 }
