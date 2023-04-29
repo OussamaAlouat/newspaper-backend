@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { index } from '../controller'
-import { deleteNewsPaper, getNewsPapers, postNewsPaper, updateNewsPaper } from '../controller/newsPapper';
+import { deleteNewsPaper, getNewspaperById, getNewsPapers, postNewsPaper, updateNewsPaper } from '../controller/newsPapper';
 
 import { check, param } from "express-validator";
 import { postCheckValidation } from "../middleware/validation";
@@ -12,6 +12,14 @@ export default () => {
   const routes = Router();
   routes.get('/',
     (req, res) => index(req, res)
+  );
+  routes.get('/newspaper/:id',
+    [
+      param('id').exists(),
+      param('id').isMongoId(),
+    ],
+    (req, res, next) => postCheckValidation(req, res, next),
+    (req, res) => getNewspaperById(req, res)
   );
 
   routes.get('/newspaper', (req, res) => getNewsPapers(req, res));
