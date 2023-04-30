@@ -116,7 +116,7 @@ const updateNewsPaper = (req, res) => {
     const { title } = req.query;
     // Used regex to make that request, to find all newspapers that its title starts with the provided data 
     // without case sensitive
-    newsPaperModel.find({ 'title': { $regex: title, '$options' : 'i' } }).then((data) => {
+    newsPaperModel.find({ 'title': { $regex: title, '$options' : 'i' } }).populate('publisher').then((data) => {
       if(data && data.length) {
         res.json(data);
       } else {
