@@ -10,7 +10,7 @@ const getNewsPapers = (req, res) => {
 
 const getNewspaperById = (req, res) => {
   const { id } = req.params;
-  newsPaperModel.findById(id).then(resp => {
+  newsPaperModel.findById(id).populate('publisher').then(resp => {
     if(resp) {
       res.json(resp);
     } else {
