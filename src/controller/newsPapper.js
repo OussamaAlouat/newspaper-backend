@@ -10,7 +10,7 @@ const getNewsPapers = (req, res) => {
 
 const getNewspaperById = (req, res) => {
   const { id } = req.params;
-  newsPaperModel.findById(id).then(resp => {
+  newsPaperModel.findById(id).populate('publisher').then(resp => {
     if(resp) {
       res.json(resp);
     } else {
@@ -111,10 +111,27 @@ const updateNewsPaper = (req, res) => {
     })
   };
 
+
+  const getNewsPaperByTitle= (req, res) => {
+    const { title } = req.query;
+    // Used regex to make that request, to find all newspapers that its title starts with the provided data 
+    // without case sensitive
+    newsPaperModel.find({ 'title': { $regex: title, '$options' : 'i' } }).populate('publisher').then((data) => {
+      if(data && data.length) {
+        res.json(data);
+      } else {
+        res.status(404).json({ msg: 'Not found' });
+      }
+    }).catch((err) => {
+      res.json(err);
+    })
+  };
+
 export {
   getNewsPapers,
   postNewsPaper,
   deleteNewsPaper,
   updateNewsPaper,
-  getNewspaperById
+  getNewspaperById,
+  getNewsPaperByTitle
 };
