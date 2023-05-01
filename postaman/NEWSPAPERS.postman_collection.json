@@ -1,0 +1,224 @@
+{
+	"info": {
+		"_postman_id": "aca714a8-9a9b-4fcb-83b8-47758f93998e",
+		"name": "NEWSPAPERS",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://localhost:3005/newspaper?title=vue",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3005/newspaper?title=vue",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3005",
+					"path": [
+						"newspaper"
+					],
+					"query": [
+						{
+							"key": "title",
+							"value": "vue"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "http://localhost:3005/newspaper?title=vue",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3005/newspaper?title=vue",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3005",
+							"path": [
+								"newspaper"
+							],
+							"query": [
+								{
+									"key": "title",
+									"value": "vue"
+								}
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "http://localhost:3005/",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3005/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3005",
+					"path": [
+						""
+					]
+				},
+				"description": "Main url, returns the schema of end points"
+			},
+			"response": [
+				{
+					"name": "http://localhost:3005/",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3005/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3005",
+							"path": [
+								""
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "http://localhost:3005/newspaper",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"Pruebas del proyecto\",\n    \"image\": \"No image\",\n    \"abstract\": \"Abstract body\",\n    \"creation_date\": \"2018-08-05T12:12:44Z\",\n    \"languages\": [\"en\", \"es\", \"fr\", \"ar\"],\n    \"publisher\": \"Oussama\",\n    \"link\": \"https://www.britannica.com/place/Michigan\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3005/newspaper",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3005",
+					"path": [
+						"newspaper"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3005/newspaper/644e1ee2c3f45665af2789a6",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"Hello\",\n    \"image\" : \"No image provided\",\n    \"abstract\": \"My abstract here\",\n    \"languages\": [\"es\"],\n    \"link\": \"No link\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3005/newspaper/644e1ee2c3f45665af2789a6",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3005",
+					"path": [
+						"newspaper",
+						"644e1ee2c3f45665af2789a6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3005/newspaper/644e8ea6b545146a2068d151",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3005/newspaper/644e8ea6b545146a2068d151",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3005",
+					"path": [
+						"newspaper",
+						"644e8ea6b545146a2068d151"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3005/newspaper/all",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3005/newspaper/id/644db5d1c6a8f849502f4833",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3005",
+					"path": [
+						"newspaper",
+						"id",
+						"644db5d1c6a8f849502f4833"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3005/newspaper/all",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3005/newspaper/all",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3005",
+					"path": [
+						"newspaper",
+						"all"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

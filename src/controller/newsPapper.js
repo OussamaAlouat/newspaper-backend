@@ -1,6 +1,10 @@
 import { v4 } from 'uuid';
 import { publisherModel, newsPaperModel } from '../model/newspaper';
 
+const notFoundMessageBody = {
+  msg: 'Not found newspaper with provided id'
+}
+
 const getNewsPapers = (req, res) => {
   newsPaperModel.find().populate('publisher').then((response) => {
     res.status(200).json({data: response})
@@ -14,7 +18,7 @@ const getNewspaperById = (req, res) => {
     if(resp) {
       res.json(resp);
     } else {
-      res.status(404).json({ msg: 'The newsPaper is not present on database' });
+      res.status(404).json(notFoundMessageBody);
     }
   }).catch((err) => {
     res.json(err);
@@ -38,7 +42,7 @@ const saveNewsPaper = (body, res) => {
 
 const postNewsPaper = (req, res) => {
   const { title, image , abstract, creation_date, languages, publisher, link } = req.body;
-  publisherModel.findOne({ name: publisher.name }).then(resp => {
+  publisherModel.findOne({ name: publisher }).then(resp => {
     if(resp) {
       newsPaperModel.find({ title, creation_date, publisher: resp })
       .then((response) => {
@@ -61,7 +65,7 @@ const postNewsPaper = (req, res) => {
       const _id = v4();
       const newPubliser = new publisherModel({
         _id,
-        name: publisher.name,
+        name: publisher,
         joined_date: new Date().toString()
       });
 
@@ -72,7 +76,8 @@ const postNewsPaper = (req, res) => {
           abstract,
           creation_date,
           languages,
-          publisher: _id, link
+          publisher: _id,
+          link
         };
         saveNewsPaper(body, res);
       })
@@ -86,7 +91,7 @@ const deleteNewsPaper = (req, res ) => {
     if(resp !== null) {
       res.json(resp);
     } else {
-      res.status(404).json({ msg: 'The newsPaper is not present on database' });
+      res.status(404).json(notFoundMessageBody);
     }
   }).catch(((err) =>{
     res.json(body);
@@ -103,7 +108,7 @@ const updateNewsPaper = (req, res) => {
         old: resp
       });
     }  else {
-      res.status(404).json({ msg: 'The newspaper id is not present on database' })
+      res.status(404).json(notFoundMessageBody)
     }
     }).catch((err) => {
       console.log(err);
@@ -120,7 +125,7 @@ const updateNewsPaper = (req, res) => {
       if(data && data.length) {
         res.json(data);
       } else {
-        res.status(404).json({ msg: 'Not found' });
+        res.status(404).json(notFoundMessageBody);
       }
     }).catch((err) => {
       res.json(err);
