@@ -3,7 +3,8 @@
 ## STRUCTURE:
   structure
 
-
+    postman:
+      -- Postman collections of project, you could import the using postman and view the examples of the petitions
     src
 
       config
