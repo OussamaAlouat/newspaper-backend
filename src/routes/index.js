@@ -41,7 +41,7 @@ export default () => {
       check('title').isLength({min: 4}),
       check('abstract').isLength({min: 2}),
       check('creation_date').exists(),
-      check('publisher').exists()
+      check('publisher').exists(),
     ],
     (req, res, next) => postCheckValidation(req, res, next),
     (req, res) => postNewsPaper(req, res)
